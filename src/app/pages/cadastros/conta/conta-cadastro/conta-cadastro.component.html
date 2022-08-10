@@ -1,0 +1,89 @@
+<form (ngSubmit)="saveOrUpdate()" [formGroup]="formulario">
+ <div class="row">
+    <input type="hidden" id="idConta" name="idConta" class="form-control" formControlName="idConta">
+      <div class="form-group col-md-3" formGroupName="tipo">
+        <label for="id">Tipo</label>
+        <select type="text" id="id" name="id" class="form-control" formControlName="id" (ngModelChange)="changeTipo()">
+          <option *ngFor="let tipo of tipoConta" value="{{tipo.id}}">{{tipo.descricao}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control" formControlName="nome">
+      </div>
+      <div class="form-group col-md-3" formGroupName="status">
+        <label for="id">Situação</label>
+        <select type="text" id="id" name="id" class="form-control" formControlName="id">
+          <option value="0">Aberto</option>
+          <option value="1">Encerrado</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="valorSaldoAbertura">Saldo Abertura</label>
+        <input type="number" id="valorSaldoAbertura" name="valorSaldoAbertura" class="form-control" formControlName="valorSaldoAbertura">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="dataAbertura">Data Abertura</label>
+        <input type="text" id="dataAbertura" name="dataAbertura" class="form-control" formControlName="dataAbertura">
+      </div>
+      <div class="form-group col-md-2" style="padding-top: 18px;">
+        <input type="checkbox" id="visivel" name="visivel" formControlName="visivel">
+        <label for="visivel" style="font-size: 14px;">Visível</label>
+      </div>
+      <div class="form-group col-md-4" style="padding-top: 18px;">
+        <input type="checkbox" id="saldoContas" name="saldoContas" formControlName="saldoContas">
+        <label for="saldoContas" style="font-size: 14px;">Mostrar soma no saldo</label>
+      </div>
+      <div class="form-group col-md-3" style="padding-top: 18px;">
+        <input type="checkbox" id="saldoFluxoCaixa" name="saldoFluxoCaixa" formControlName="saldoFluxoCaixa">
+        <label for="saldoFluxoCaixa" style="font-size: 14px;">Mostrar soma no fluxo de caixa</label>
+      </div>
+      <div class="form-group col-md-3 d-none" formGroupName="contaCorrente" id="contaCorrenteDiv">
+        <label for="idContaCorrente">Conta Corrente</label>
+        <select type="text" id="idContaCorrente" name="idContaCorrente" class="form-control" formControlName="idContaCorrente">
+          <option value="">Selecione...</option>
+          <option *ngFor="let contaCorrente of contaCorrenteArray" value="{{contaCorrente.idContaCorrente}}">{{contaCorrente.nome}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3 d-none" formGroupName="cartaoCredito" id="cartaoCreditoDiv">
+        <label for="idCartaoCredito">Cartão Crédito</label>
+        <select type="text" id="idCartaoCredito" name="idCartaoCredito" class="form-control" formControlName="idCartaoCredito">
+          <option value="">Selecione...</option>
+          <option *ngFor="let cartaoCredito of cartaoCreditoArray" value="{{cartaoCredito.idCartaoCredito}}">{{cartaoCredito.nome}}</option>
+        </select>
+      </div>
+      <div id="cartaoDiv" class="row d-none">
+        <div class="form-group col-md-3" formGroupName="favorecido">
+          <label for="idFavorecido">Favorecido</label>
+          <select type="text" id="idFavorecido" name="idFavorecido" class="form-control" formControlName="idFavorecido">
+            <option value="0">Selecione...</option>
+            <option *ngFor="let favorecido of favorecidoArray" value="{{favorecido.idFavorecido}}">{{favorecido.nome}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="prazoPagamentoDiaUtil">Prazo Pagamento</label>
+          <input type="text" id="prazoPagamentoDiaUtil" name="prazoPagamentoDiaUtil" class="form-control" formControlName="prazoPagamentoDiaUtil">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="taxaCartao">Taxa do Cartão</label>
+          <input type="text" id="taxaCartao" name="taxaCartao" class="form-control" formControlName="taxaCartao">
+        </div>
+      </div>
+      <div class="form-group col-md-12" style="padding-top: 8px;" formArrayName="tipoFormaPagamentos">
+        <label>Selecionar Formas de Pagamento</label>
+        <div *ngFor="let formaPagamento of formaPagamentoArray let i = index">
+          <input type="checkbox" id="{{formaPagamento.idTipoFormaPagamento}}" name="formaPagamentos" (change)="addOrRemoveFormaPagamento(formaPagamento.idTipoFormaPagamento, $event)" name="{{formaPagamento.idTipoFormaPagamento}}">
+          <label for="{{formaPagamento.idTipoFormaPagamento}}" style="padding-left: 5px;">{{formaPagamento.descricao}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="float: right; padding-top: 10px;">
+      <div style="padding-top: 10px;">
+        <span style="padding-right: 10px;"><button type="button" class="btn" (click)="closeDialog()">Cancelar</button></span>
+        <button type="submit" class="btn btn-primary" style="background: #2094F0; border: 1px solid #2094F0" ><i class="pi pi-save saveIcon" style="padding-right: 5px;"></i>Salvar</button>
+      </div>
+    </div>
+</form>

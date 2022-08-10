@@ -1,0 +1,57 @@
+<div style="padding-right: 130px;">
+  <h5 class="title">{{title}}</h5>
+  <div class="row buttonDiv">
+    <div class="col-md-6">
+      <input type="text" placeholder="Pesquisar" class="searchInput">
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="myButton" (click)="openDialog(0)"><i class="pi pi-plus myIcon"></i><span class="buttonTitle">Adicionar</span></button>
+    </div>
+  </div>
+</div>
+<div class="myTable">
+  <p-table id="myTable" responsiveLayout="scroll" [value]="formaPagamentoArray" class="table">
+    <ng-template pTemplate="header">
+      <tr id="myTr">
+        <th style="width: 80px;">Situação</th>
+        <th style="width: 80px;">Código</th>
+        <th style="width: 850px;">Descrição</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" id="tableBody" let-array let-columns="columnsArray">
+        <tr>
+          <td class="text-center"><i id="icon" class="pi pi-circle-fill" style="color: #33B83B;"></i></td>
+          <td class="text-center">{{array.idTipoFormaPagamento}}</td>
+          <td class="text-left">{{array.descricao}}
+            <div style="float: right;">
+              <i style="padding-right: 30px; color: #2094F0" class="fa fa-pencil-square-o" (click)="openDialog(array.idTipoFormaPagamento)"></i>
+              <i style="color: red" class="fa fa-trash-o" (click)="deleteRow($event, array)"></i>
+            </div>
+          </td>
+        </tr>
+    </ng-template>
+  </p-table>
+  <div class="countDiv">
+    <span class="count">Mostrando {{total}} de {{total}} registros</span>
+  </div>
+</div>
+
+<p-dialog [(visible)]="displayDeleteModal" [style]="{ width: '30vw' }" styleClass="overlayDialog">
+  <form (submit)="deleteFormaPagamento()">
+      <div class="form-group text-center" style="padding-bottom: 40px;">
+        <input type="hidden" id="idTipoFormaPagamento" name="idTipoFormaPagamento">
+        <div style="padding-bottom: 30px">
+          <i style="font-size: 5rem" class="pi pi-times-circle text-danger"></i>
+        </div>
+
+        <div class="modalTitle"><h5>Excluir conta</h5></div>
+        <div>Você realmente deseja exluir essa Forma de Pagamento?</div>
+      </div>
+      <div class="form-row">
+        <div class="text-center">
+          <span style="padding-right: 20px;"><button type="button" class="btn" (click)="closeDeleteModal()">Cancelar</button></span>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </div>
+      </div>
+  </form>
+</p-dialog>

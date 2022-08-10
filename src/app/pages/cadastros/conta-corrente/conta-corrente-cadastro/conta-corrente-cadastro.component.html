@@ -1,0 +1,48 @@
+<form (ngSubmit)="saveOrUpdate()" [formGroup]="formulario">
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label for="nome">Nome da Conta</label>
+      <input type="text" id="nome" name="nome" class="form-control" formControlName="nome">
+      <input type="hidden" id="idContaCorrente" name="idContaCorrente" class="form-control" formControlName="idContaCorrente">
+    </div>
+    <div class="form-group col-md-3" formGroupName="banco">
+      <label for="idBanco">Banco</label>
+      <select type="text" id="idBanco" name="idBanco" class="form-control" formControlName="idBanco">
+        <option value="">Selecione...</option>
+        <option *ngFor="let banco of bancoArray" value="{{banco.idBanco}}">{{banco.nome}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="agencia">Agência</label>
+      <input type="number" id="agencia" name="agencia" class="form-control" formControlName="agencia">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="contaCorrente">Conta Corrente</label>
+      <input type="number" id="contaCorrente" name="contaCorrente" class="form-control" formControlName="contaCorrente">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="poupanca">Conta Poupança</label>
+      <select type="text" id="poupanca" name="poupanca" class="form-control" formControlName="poupanca">
+        <option value="false">Não</option>
+        <option value="true">Sim</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="limite">Limite</label>
+      <input type="number" id="limite" name="limite" class="form-control" formControlName="limite">
+      <div *ngIf="formulario.get('limite')?.errors?.['required'] && formulario.get('limit')?.touched">
+          Obrigatório
+      </div>
+    </div>
+  </div>
+  <div class="row" style="float: right; padding-top: 10px;">
+    <div style="padding-top: 10px;">
+      <span style="padding-right: 10px;"><button type="button" class="btn" (click)="closeDialog()">Cancelar</button></span>
+      <button type="submit" class="btn btn-primary" style="background: #2094F0; border: 1px solid #2094F0" ><i class="pi pi-save saveIcon" style="padding-right: 5px;"></i>Salvar</button>
+    </div>
+  </div>
+  <span style="color: red;">* campos obrigatorios em vermelhor</span>
+</form>

@@ -1,0 +1,77 @@
+<div style="padding-right: 130px;">
+  <h5 class="title">{{title}}</h5>
+  <div class="row buttonDiv">
+    <div class="col-md-6">
+      <input type="text" placeholder="Pesquisar" class="searchInput">
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="myButton" (click)="openDialog(0)"><i class="pi pi-plus myIcon"></i><span class="buttonTitle">Adicionar</span></button>
+    </div>
+  </div>
+</div>
+<div class="myTable">
+  <p-table id="myTable" responsiveLayout="scroll" [value]="contaArray" class="table">
+    <ng-template pTemplate="header">
+      <tr id="myTr">
+        <th class="text-center">Situação</th>
+        <th class="text-center">Nome</th>
+        <th class="text-center">Tipo</th>
+        <th class="text-center">Data Abertura</th>
+        <th class="text-center">Valor Abertura</th>
+        <th class="text-center">Visível</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" id="tableBody" let-array let-columns="columnsArray">
+        <tr>
+          <td class="text-center"><i id="icon" class="pi pi-circle-fill" style="color: #33B83B;"></i></td>
+        <td class="text-center">{{array.nome}}</td>
+        <td class="text-center">{{array.tipo.descricao}}</td>
+        <td class="text-center">{{ array.dataAbertura | date:'dd/MM/Y'}}</td>
+        <td class="text-center">{{array.valorSaldoAbertura}}</td>
+        <td class="text-center">{{array.visivel == true ? 'Sim' : 'Não'}}</td>
+        <td style="float: right">
+          <i style="padding-right: 10px; color: #2094F0" class="fa fa-pencil-square-o" title="Editar {{array.nome}}" (click)="openDialog(array.idConta)"></i>
+          <i style="color: red; padding-right: 10px" class="fa fa-trash-o" title="Deletar {{array.nome}}" (click)="deleteRow(array)"></i>
+          <i style="color: darkblue" class="fa fa-info-circle" title="Mostrar Detalhes {{array.nome}}" (click)="mostrarDetalhes(array)"></i>
+        </td>
+      </tr>
+      <!-- </td> -->
+  </ng-template>
+  </p-table>
+  <div class="countDiv">
+    <span class="count">Mostrando {{total}} de {{total}} registros</span>
+  </div>
+</div>
+
+<p-dialog [(visible)]="displayDeleteModal" [style]="{ width: '30vw' }" styleClass="overlayDialog">
+  <form (submit)="deleteConta()">
+      <div class="form-group text-center" style="padding-bottom: 40px;">
+        <input type="hidden" id="idTipoFormaPagamento" name="idTipoFormaPagamento">
+        <div style="padding-bottom: 30px">
+          <i style="font-size: 5rem" class="pi pi-times-circle text-danger"></i>
+        </div>
+
+        <div class="modalTitle"><h5>Excluir Conta</h5></div>
+        <div>Você realmente deseja exluir essa Conta?</div>
+      </div>
+      <div class="form-row">
+        <div class="text-center">
+          <span style="padding-right: 20px;"><button type="button" class="btn" (click)="closeDeleteModal()">Cancelar</button></span>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </div>
+      </div>
+  </form>
+</p-dialog>
+
+<p-dialog header="{{detailsModalTitle}}" [(visible)]="displayDetailsModal" [style]="{ width: '50vw' }" styleClass="overlayDialog">
+  <div class="row" style="padding-top: 15px;">
+    <span style="padding-bottom: 5px;"><b>Nome:</b> {{this.conta.nome}}</span>
+    <span style="padding-bottom: 5px;"><b>Tipo:</b> {{this.conta.tipo?.descricao}}</span>
+    <span style="padding-bottom: 5px;"><b>Situação:</b> {{this.conta.status?.descricao}}</span>
+    <span style="padding-bottom: 5px;"><b>Data:</b> {{this.conta.dataAbertura | date:'dd/MM/Y'}}</span>
+    <span *ngIf="this.conta.contaCorrente?.nome" style="padding-bottom: 5px;"><b>Conta Corrente:</b> {{this.conta.contaCorrente.nome}}</span>
+  </div>
+</p-dialog>
+
+
