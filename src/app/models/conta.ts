@@ -27,6 +27,6 @@ export interface Conta {
   }
   contaCorrente: ContaCorrente
   cartaoCredito: CartaoCredito
-  tipoFormaPagamentos: FormaPagamento
+  tipoFormaPagamentos?: FormaPagamento[]
   favorecido?: Favorecido | null
 }

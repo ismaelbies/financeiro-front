@@ -114,6 +114,13 @@ export class ContaCadastroComponent implements OnInit {
       let dataAbertura = new Date(this.formulario.get('dataAbertura')?.value);
       let dataAberturaFormatada = this.datePipe.transform(dataAbertura, 'dd/MM/yyyy');
       this.formulario.get('dataAbertura')?.setValue(dataAberturaFormatada);
+      conta.tipoFormaPagamentos = conta.tipoFormaPagamentos as [];
+      conta.tipoFormaPagamentos.forEach((formaPagamento: FormaPagamento) => {
+        const formaPagamentoFormgroup = this.formBuilder.group({
+          idTipoFormaPagamento: [formaPagamento.idTipoFormaPagamento],
+        });
+        this.tipoFormaPagamentos.push(formaPagamentoFormgroup);
+      })
       console.log(conta.tipoFormaPagamentos);
     });
   }
